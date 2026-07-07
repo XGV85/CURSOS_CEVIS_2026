@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NMX-R-025-SCFI-2015 · CEVIS · Situación Didáctica 3</title>
+<style>
+/* ── GILROY ── */
+@font-face { font-family:'Gilroy'; src:url('assets/fonts/Gilroy-Regular.ttf'); font-weight:400; font-style:normal; }
+@font-face { font-family:'Gilroy'; src:url('assets/fonts/Gilroy-Bold.ttf');    font-weight:700; font-style:normal; }
+@font-face { font-family:'Gilroy'; src:url('assets/fonts/Gilroy-Black.ttf');   font-weight:900; font-style:normal; }
+
+/* ── TOKENS ── */
+:root {
+  --g:#931635; --gd:#8C1E2F; --gl:#b8304f; --gu:#5a0f1e;
+  --gold:#D79D56; --goldl:#e8b97a; --goldd:#b37d34;
+  --cream:#FFF9EF; --cdk:#F0E8D4; --cdk2:#c4aa88;
+  --white:#FFFFFF; --text:#2C1810; --textl:#6B4B3A;
+  --sh:rgba(140,30,47,.22);
+}
+
+/* ── BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a0408;font-family:'Gilroy','Segoe UI',Arial,sans-serif}
+
+/* ── SCALE WRAPPER ── */
+#wrapper{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#pres{width:1280px;height:720px;position:relative;overflow:hidden;flex-shrink:0;transform-origin:center center}
+
+/* ── PROGRESS BAR ── */
+#pb{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gl));transition:width .4s ease;z-index:200;box-shadow:0 0 8px rgba(215,157,86,.5)}
+
+/* ── SLIDES ── */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateX(60px);transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1)}
+.slide.active{opacity:1;pointer-events:all;transform:none}
+.slide.exit-left{opacity:0;transform:translateX(-60px)}
+
+/* ── HEADER ── */
+.hd{display:flex;align-items:center;justify-content:space-between;background:var(--gd);padding:0 28px 0 24px;height:72px;flex-shrink:0;position:relative;z-index:10}
+.hd::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--goldd),var(--goldl) 40%,var(--goldd));z-index:11}
+.hd-text{display:flex;flex-direction:column;gap:3px}
+.ht{font-size:20px;font-weight:900;color:var(--white);letter-spacing:.04em;text-transform:uppercase}
+.hsub{font-size:12px;font-weight:400;color:var(--goldl);letter-spacing:.1em}
+.hlogo{height:44px;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+
+/* ── ANIMATIONS ── */
+@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes popUp{to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.a1,.a2,.a3,.a4,.a5{opacity:0;transform:translateY(14px)}
+.slide.active .a1{animation:slideUp .5s .06s ease forwards}
+.slide.active .a2{animation:slideUp .5s .17s ease forwards}
+.slide.active .a3{animation:slideUp .5s .28s ease forwards}
+.slide.active .a4{animation:slideUp .5s .39s ease forwards}
+.slide.active .a5{animation:slideUp .5s .5s ease forwards}
+
+/* ══════════════════════════════════════
+   S1 — PORTADA
+══════════════════════════════════════ */
+#s1 .sb{display:flex;flex-direction:column;background:var(--cream);overflow:hidden;flex:1}
+.s1-text{flex:1;display:flex;flex-direction:column;justify-content:center;padding:22px 44px 14px;border-bottom:4px solid var(--gold)}
+.s1-kicker{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.s1-title{font-size:36px;font-weight:900;color:var(--gd);line-height:1.18;margin-bottom:18px}
+.s1-row{display:flex;align-items:center;gap:14px}
+.s1-nmx{background:var(--gd);color:white;padding:5px 18px;border-radius:3px;font-size:14px;font-weight:700;letter-spacing:.08em;flex-shrink:0}
+.s1-badges{display:flex;gap:8px;flex-wrap:wrap}
+.s1-badge{background:rgba(140,30,47,.1);color:var(--gd);border:1px solid rgba(140,30,47,.25);padding:4px 12px;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:.06em;opacity:0;transform:translateY(4px)}
+.slide.active .s1-badge:nth-child(1){animation:popUp .3s .55s ease forwards}
+.slide.active .s1-badge:nth-child(2){animation:popUp .3s .68s ease forwards}
+.slide.active .s1-badge:nth-child(3){animation:popUp .3s .81s ease forwards}
+/* Portada image — full width, natural ratio (1505×483 → 1280×411), no stretch, no crop */
+.s1-portada{width:100%;height:auto;display:block;flex-shrink:0}
+
+/* ══════════════════════════════════════
+   S2 — FLIP CARDS
+══════════════════════════════════════ */
+#s2 .sb{background:var(--cream);flex:1;display:flex;flex-direction:column;padding:18px 24px;gap:12px}
+.s2-intro{background:var(--gd);color:var(--white);border-radius:7px;padding:14px 22px;font-size:15px;font-weight:400;line-height:1.55;flex-shrink:0}
+.s2-intro strong{font-weight:700;color:var(--goldl)}
+.cards-row{display:flex;gap:14px;flex:1;min-height:0}
+.flip-card{flex:1;perspective:1000px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .65s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:8px;overflow:hidden}
+.flip-front{background:var(--white);box-shadow:0 2px 16px var(--sh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px 24px;text-align:center;transition:box-shadow .2s,transform .2s}
+.flip-card:not(.flipped):hover .flip-front{box-shadow:0 8px 28px var(--sh);transform:translateY(-3px)}
+.flip-back{background:var(--gd);transform:rotateY(180deg);display:flex;flex-direction:column;padding:24px 26px}
+.card-icon{font-size:62px;line-height:1}
+.card-front-title{font-size:19px;font-weight:700;color:var(--gd)}
+.card-front-hint{font-size:13px;font-weight:400;color:var(--textl)}
+.card-flip-btn{background:var(--gold);color:white;padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.05em}
+.card-back-title{font-size:13px;font-weight:700;color:var(--goldl);text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid rgba(215,157,86,.4);padding-bottom:8px;margin-bottom:12px;flex-shrink:0}
+.card-back-body ul{padding-left:16px}
+.card-back-body li{font-size:14px;font-weight:400;color:rgba(255,255,255,.9);line-height:1.6;margin-bottom:7px}
+.card-back-body li::marker{color:var(--gold)}
+.card-back-note{margin-top:12px;background:rgba(215,157,86,.15);border-radius:5px;padding:10px 14px;font-size:13px;color:rgba(255,255,255,.85);border-left:3px solid var(--gold)}
+.s2-stats{display:flex;gap:10px;flex-shrink:0}
+.s2-stat{flex:1;background:var(--gd);border-radius:6px;padding:12px 16px;text-align:center}
+.s2-stat-num{font-size:28px;font-weight:900;color:var(--gold);line-height:1}
+.s2-stat-label{font-size:11px;font-weight:400;color:rgba(255,255,255,.7);margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+
+/* ══════════════════════════════════════
+   EJES LAYOUT (S3–S5)
+══════════════════════════════════════ */
+.eje-wrap{display:flex;height:100%}
+.eje-left{width:290px;background:linear-gradient(150deg,var(--gd) 0%,var(--g) 100%);display:flex;flex-direction:column;padding:28px 24px 22px;flex-shrink:0;position:relative;overflow:hidden}
+.eje-left::before{content:'';position:absolute;top:-40%;right:-20%;width:80%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.eje-num{font-size:72px;font-weight:900;color:rgba(255,255,255,.1);line-height:1;flex-shrink:0;margin-bottom:-8px}
+.eje-kicker{font-size:11px;font-weight:700;color:var(--goldl);letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px;flex-shrink:0}
+.eje-name{font-size:22px;font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px;flex-shrink:0}
+.viz-label{font-size:11px;font-weight:400;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;flex-shrink:0}
+.viz-counter{font-size:48px;font-weight:900;color:var(--goldl);line-height:1;flex-shrink:0}
+.viz-sub{font-size:12px;font-weight:400;color:rgba(255,255,255,.58);margin-top:5px;line-height:1.4;flex-shrink:0}
+.viz-bars{flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;margin-top:14px}
+.vb-row{display:flex;flex-direction:column;gap:4px}
+.vb-hdr{display:flex;justify-content:space-between}
+.vb-name{font-size:12px;font-weight:400;color:rgba(255,255,255,.65)}
+.vb-val{font-size:12px;font-weight:700;color:var(--goldl)}
+.vb-track{background:rgba(255,255,255,.1);border-radius:3px;height:7px;overflow:hidden}
+.vb-fill{height:100%;width:0;border-radius:3px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.vb-g{background:linear-gradient(90deg,var(--gl),var(--goldl))}
+.vb-w{background:rgba(255,255,255,.4)}
+.viz-note{font-size:11px;font-weight:400;color:rgba(255,255,255,.38);line-height:1.4;margin-top:8px;flex-shrink:0}
+.eje-right{flex:1;padding:14px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.eje-right::-webkit-scrollbar{width:3px}
+.eje-right::-webkit-scrollbar-thumb{background:var(--g);border-radius:2px}
+
+/* Accordion */
+.acc{background:var(--white);border-radius:7px;border-left:5px solid var(--g);box-shadow:0 1px 6px rgba(0,0,0,.07);overflow:hidden;transition:box-shadow .2s;flex-shrink:0}
+.acc:hover{box-shadow:0 4px 16px var(--sh)}
+.acc-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;background:var(--white);transition:background .2s;user-select:none}
+.acc-head:hover{background:#fdf5f0}
+.acc-n{background:var(--g);color:var(--white);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
+.acc-ico{font-size:18px;flex-shrink:0}
+.acc-t{font-size:15px;font-weight:700;color:var(--gd);flex:1}
+.acc-arr{color:var(--g);font-size:13px;transition:transform .25s;flex-shrink:0}
+.acc.open .acc-arr{transform:rotate(90deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .38s ease;background:#fdf5f0}
+.acc.open .acc-body{max-height:180px}
+.acc-bi{padding:10px 16px 12px 52px;font-size:14px;font-weight:400;color:var(--text);line-height:1.65}
+.acc-bi em{color:var(--g);font-style:normal;font-weight:700}
+.acc-bi .tag{display:inline-block;background:rgba(147,22,53,.1);color:var(--gd);padding:2px 8px;border-radius:3px;font-size:12px;font-weight:700;margin-top:6px}
+
+/* ══════════════════════════════════════
+   S6 — CERTIFICACIÓN
+══════════════════════════════════════ */
+#s6 .sb{display:flex;flex-direction:column;padding:18px 28px;gap:14px;overflow:hidden;background:var(--cream);flex:1}
+.stepper{display:flex;align-items:flex-start;flex-shrink:0}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;cursor:pointer}
+.step-conn{position:absolute;top:20px;left:50%;width:100%;height:3px;background:var(--cdk2);z-index:0;transform:translateY(-50%)}
+.step:last-child .step-conn{display:none}
+.step-fill{height:100%;width:0;background:linear-gradient(90deg,var(--g),var(--gold));transition:width .5s ease;border-radius:2px}
+.step-circ{width:40px;height:40px;border-radius:50%;background:var(--cdk);border:3px solid var(--cdk2);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--textl);transition:background .3s,border-color .3s,color .3s,transform .2s,box-shadow .2s;position:relative;z-index:1;flex-shrink:0}
+.step.act .step-circ{background:var(--g);border-color:var(--g);color:white;transform:scale(1.12);box-shadow:0 0 0 5px rgba(147,22,53,.2)}
+.step.done .step-circ{background:var(--goldd);border-color:var(--goldd);color:white}
+.step-lbl{font-size:12px;font-weight:400;color:var(--textl);text-align:center;margin-top:7px;line-height:1.3;max-width:90%;transition:color .2s,font-weight .2s}
+.step.act .step-lbl{color:var(--g);font-weight:700}
+.step.done .step-lbl{color:var(--goldd)}
+.cert-panel{flex:1;display:flex;gap:14px;min-height:0}
+.cert-detail{flex:1;background:var(--white);border-radius:8px;padding:20px 24px;overflow-y:auto;box-shadow:0 2px 12px var(--sh)}
+.cert-detail::-webkit-scrollbar{width:3px}
+.cert-detail::-webkit-scrollbar-thumb{background:var(--g);border-radius:2px}
+.cert-detail h4{font-size:18px;font-weight:900;color:var(--gd);border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:10px}
+.cert-detail p{font-size:14px;font-weight:400;color:var(--text);line-height:1.65;margin-bottom:8px}
+.cert-detail ul{padding-left:18px;margin-bottom:8px}
+.cert-detail li{font-size:14px;font-weight:400;color:var(--text);line-height:1.6;margin-bottom:5px}
+.cert-detail li::marker{color:var(--g)}
+.cert-side{width:260px;display:flex;flex-direction:column;gap:12px}
+.benefit{background:var(--white);border-radius:7px;border-top:4px solid var(--g);padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,.07);flex:1;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.benefit.show{opacity:1;transform:none}
+.ben-title{font-size:15px;font-weight:700;color:var(--gd);margin-bottom:6px}
+.ben-body{font-size:13px;font-weight:400;color:var(--textl);line-height:1.55}
+
+/* S7 bibliografía CSS already above; S8 cierre CSS already above */
+.c-decor{display:flex;align-items:center;gap:10px;margin-bottom:20px;z-index:1}
+.c-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);opacity:.7}
+.c-line{width:50px;height:2px;background:var(--gold);opacity:.45}
+.c-main{font-size:52px;font-weight:900;color:var(--white);line-height:1.05;margin-bottom:16px;z-index:1}
+.c-sub{font-size:17px;font-weight:400;color:rgba(255,255,255,.82);max-width:600px;line-height:1.6;margin-bottom:28px;z-index:1}
+.c-sub strong{font-weight:700;color:var(--goldl)}
+.tks{display:flex;gap:14px;z-index:1;width:100%;max-width:900px;margin-bottom:28px}
+.tk{flex:1;background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border-radius:8px;padding:20px 22px;border:1px solid rgba(255,255,255,.2);opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s}
+.tk.show{opacity:1;transform:none}
+.tk-num{font-size:40px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px}
+.tk-text{font-size:14px;font-weight:400;color:rgba(255,255,255,.9);line-height:1.55}
+.c-orgs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;z-index:1;margin-bottom:20px}
+.c-org{background:rgba(255,255,255,.13);color:rgba(255,255,255,.9);padding:5px 14px;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:.1em;border:1px solid rgba(255,255,255,.25)}
+.c-logo{height:32px;object-fit:contain;filter:brightness(0) invert(1);opacity:.65;z-index:1}
+.c-gold-line{width:70px;height:3px;background:var(--gold);border-radius:2px;z-index:1;margin-top:14px}
+
+/* ══════════════════════════════════════
+   S7 — BIBLIOGRAFÍA
+══════════════════════════════════════ */
+#s7 .sb{background:var(--cream);flex:1;padding:22px 40px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+#s7 .sb::-webkit-scrollbar{width:3px}
+#s7 .sb::-webkit-scrollbar-thumb{background:var(--g);border-radius:2px}
+.bib-section{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.18em;margin-top:10px;margin-bottom:6px;padding-bottom:4px;border-bottom:2px solid var(--gold);flex-shrink:0}
+.bib-section:first-child{margin-top:0}
+.bib-entry{font-size:13px;font-weight:400;color:var(--text);line-height:1.65;padding-left:24px;text-indent:-24px;flex-shrink:0}
+.bib-entry em{font-style:italic}
+.bib-entry .tag-pc{display:inline-block;background:rgba(147,22,53,.1);color:var(--gd);padding:1px 6px;border-radius:2px;font-size:11px;font-weight:700;margin-left:5px;text-indent:0}
+.bib-entry a{color:var(--g);text-decoration:none;border-bottom:1px solid rgba(147,22,53,.3);transition:color .15s,border-color .15s}
+.bib-entry a:hover{color:var(--gl);border-bottom-color:var(--gl)}
+
+/* Cert nav arrows */
+.cert-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.cert-nav-btn{background:var(--gd);color:white;border:none;border-radius:6px;padding:6px 18px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .1s,opacity .2s;display:flex;align-items:center;gap:8px;letter-spacing:.03em;flex-shrink:0}
+.cert-nav-btn:hover:not(:disabled){background:var(--g);transform:translateY(-1px)}
+.cert-nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.cert-nav-btn .arr{font-size:16px;line-height:1}
+
+/* Cierre → now #s8 */
+#s8 .sb{background:linear-gradient(145deg,var(--gu) 0%,var(--gd) 40%,var(--g) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 48px;position:relative;overflow:hidden;text-align:center;flex:1}
+#s8 .sb::before{content:'';position:absolute;top:-30%;left:-15%;width:55%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+#s8 .sb::after{content:'';position:absolute;bottom:-25%;right:-10%;width:45%;aspect-ratio:1;border-radius:50%;background:rgba(0,0,0,.08);pointer-events:none}
+
+/* ── NAV ── */
+#nav{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(140,30,47,.88);backdrop-filter:blur(8px);padding:7px 18px;border-radius:30px;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+.nb{background:none;border:none;color:rgba(255,255,255,.7);font-size:16px;cursor:pointer;padding:4px 8px;border-radius:5px;transition:color .15s,background .15s;line-height:1;font-family:inherit}
+.nb:hover{color:white;background:rgba(255,255,255,.12)}
+#sc{color:rgba(255,255,255,.85);font-size:13px;font-weight:700;min-width:36px;text-align:center;letter-spacing:.04em}
+.pd{display:flex;gap:6px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .2s,transform .2s;cursor:pointer}
+.dot.act{background:var(--gold);transform:scale(1.4)}
+</style>
+</head>
+<body>
+<div id="wrapper">
+<div id="pres">
+<div id="pb"></div>
+
+<!-- ══ S1 PORTADA ══ -->
+<div class="slide active" id="s1">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Situación Didáctica 3 · Lección 2</div>
+      <div class="hsub a1">Marco normativo e igualdad salarial en el servicio público</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="s1-text">
+      <div class="s1-kicker a1">Situación Didáctica 3 de 4 · Lección 2</div>
+      <h1 class="s1-title a2">Marco normativo e igualdad salarial<br>en el servicio público</h1>
+      <div class="s1-row a3">
+        <span class="s1-nmx">NMX-R-025-SCFI-2015</span>
+        <div class="s1-badges">
+          <span class="s1-badge">STPS</span>
+          <span class="s1-badge">INMUJERES</span>
+          <span class="s1-badge">CONAPRED</span>
+          <span class="s1-badge">DOF · 23/11/2015</span>
+        </div>
+      </div>
+    </div>
+    <img class="s1-portada a4" src="assets/portada.jpg" alt="Brecha Salarial de Género e Igualdad Salarial — CEVIS">
+  </div>
+</div>
+
+<!-- ══ S2 ¿QUÉ ES? ══ -->
+<div class="slide" id="s2">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">¿Qué es la NMX-R-025-SCFI-2015?</div>
+      <div class="hsub a1">Haz clic en cada tarjeta para descubrir más</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="s2-intro a2">La <strong>Norma Mexicana NMX-R-025-SCFI-2015</strong> es el estándar de certificación voluntaria en materia de igualdad laboral en México. Publicada en el <strong>Diario Oficial de la Federación el 23 de noviembre de 2015</strong>, aplica a cualquier organización pública o privada, sin importar tamaño o sector.</div>
+    <div class="cards-row a3">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="card-icon">📋</div>
+            <div class="card-front-title">¿Qué certifica?</div>
+            <div class="card-front-hint">Alcance y contenido de la norma</div>
+            <div class="card-flip-btn">↻ Clic para ver</div>
+          </div>
+          <div class="flip-back">
+            <div class="card-back-title">¿Qué certifica?</div>
+            <div class="card-back-body">
+              <ul>
+                <li>Prácticas de <strong>igualdad de trato y oportunidades</strong> entre mujeres y hombres</li>
+                <li>Ausencia de <strong>discriminación</strong> por sexo, edad, origen étnico, discapacidad u orientación sexual</li>
+                <li>Entornos laborales <strong>libres de violencia y acoso</strong> sexual y laboral</li>
+                <li>Medidas de <strong>corresponsabilidad</strong> familia-trabajo efectivas</li>
+              </ul>
+              <div class="card-back-note">Certificación válida <strong>3 años</strong> con auditorías anuales de vigilancia.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="card-icon">🏛️</div>
+            <div class="card-front-title">¿Quiénes la impulsan?</div>
+            <div class="card-front-hint">Organismos promotores y verificadores</div>
+            <div class="card-flip-btn">↻ Clic para ver</div>
+          </div>
+          <div class="flip-back">
+            <div class="card-back-title">Organismos promotores</div>
+            <div class="card-back-body">
+              <ul>
+                <li><strong>STPS</strong> — Secretaría del Trabajo y Previsión Social</li>
+                <li><strong>INMUJERES</strong> — Instituto Nacional de las Mujeres</li>
+                <li><strong>CONAPRED</strong> — Consejo Nacional para Prevenir la Discriminación</li>
+              </ul>
+              <div class="card-back-note">La verificación la realizan <strong>Entidades de Certificación (ECV)</strong> acreditadas por la <strong>EMA</strong>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="card-icon">🎯</div>
+            <div class="card-front-title">¿Por qué importa?</div>
+            <div class="card-front-hint">Relevancia para el sector público</div>
+            <div class="card-flip-btn">↻ Clic para ver</div>
+          </div>
+          <div class="flip-back">
+            <div class="card-back-title">¿Por qué importa?</div>
+            <div class="card-back-body">
+              <ul>
+                <li>Único estándar que integra <strong>igualdad, no discriminación y libre de violencia</strong> en un solo instrumento</li>
+                <li>Conecta el diagnóstico de brecha salarial con <strong>acciones concretas y medibles</strong></li>
+                <li>Otorga el <strong>Distintivo NMX-R-025</strong> con reconocimiento institucional</li>
+                <li>En Puebla, referente directo para la política de igualdad en el servicio público</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="s2-stats a4">
+      <div class="s2-stat"><div class="s2-stat-num">2015</div><div class="s2-stat-label">Publicación en el DOF</div></div>
+      <div class="s2-stat"><div class="s2-stat-num">3</div><div class="s2-stat-label">Organismos promotores</div></div>
+      <div class="s2-stat"><div class="s2-stat-num">3</div><div class="s2-stat-label">Ejes de acción</div></div>
+      <div class="s2-stat"><div class="s2-stat-num">3 años</div><div class="s2-stat-label">Vigencia del certificado</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S3 EJE 1 ══ -->
+<div class="slide" id="s3">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Eje 1 · Igualdad y No Discriminación</div>
+      <div class="hsub a1">Selección, salario, promoción y protección</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="eje-wrap">
+      <div class="eje-left a2">
+        <div class="eje-num">01</div>
+        <div class="eje-kicker">Primer eje</div>
+        <div class="eje-name">Igualdad y No Discriminación</div>
+        <div class="viz-label">Brecha salarial no ajustada</div>
+        <div class="viz-counter" id="cnt3">0%</div>
+        <div class="viz-sub">de brecha en ingreso mensual promedio<br><span style="font-size:11px;opacity:.5">(INEGI, 2022a; IMCO, 2022)</span></div>
+        <div class="viz-bars">
+          <div class="vb-row">
+            <div class="vb-hdr"><span class="vb-name">Ingreso mensual mujer</span><span class="vb-val" id="vl3a">—</span></div>
+            <div class="vb-track"><div class="vb-fill vb-g" data-w="86" id="vb3a"></div></div>
+          </div>
+          <div class="vb-row">
+            <div class="vb-hdr"><span class="vb-name">Ingreso mensual hombre</span><span class="vb-val">100%</span></div>
+            <div class="vb-track"><div class="vb-fill vb-w" data-w="100" id="vb3b"></div></div>
+          </div>
+        </div>
+        <div class="viz-note">El Eje 1 exige auditorías salariales internas para eliminar esta brecha.</div>
+      </div>
+      <div class="eje-right a3">
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">1</div><span class="acc-ico">🚫</span><div class="acc-t">Selección sin requisitos discriminatorios</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">La norma <em>prohíbe solicitar</em>: estado civil, fotografía de cuerpo completo, prueba de embarazo o no gravidez, ni condición de salud como requisito injustificado. Los criterios deben basarse exclusivamente en <em>aptitud, experiencia y mérito</em> para el puesto. <span class="tag">Práctica obligatoria</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">2</div><span class="acc-ico">⚖️</span><div class="acc-t">Igualdad salarial por trabajo de igual valor</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Mujeres y hombres que realizan <em>el mismo trabajo o trabajo de igual valor</em> deben recibir idéntica remuneración total: salario base, bonos, comisiones y prestaciones. Requiere <em>auditoría salarial interna documentada</em> y periódica. <span class="tag">Auditoría requerida</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">3</div><span class="acc-ico">🛡️</span><div class="acc-t">Protocolo contra acoso y hostigamiento sexual</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Protocolo formal con: <em>procedimiento de denuncia confidencial, instancia receptora imparcial, plazos máximos de resolución y protección a la persona afectada</em> durante el proceso. Debe difundirse a toda la plantilla. <span class="tag">Documento obligatorio</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">4</div><span class="acc-ico">📈</span><div class="acc-t">Evaluación y promoción sin sesgo de género</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Evaluaciones basadas en <em>criterios predefinidos, documentados y aplicados por igual</em>. Prohibido penalizar el uso de <em>permisos de maternidad, paternidad o lactancia</em>. Resultados analizados desagregados por sexo. <span class="tag">Evidencia requerida</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">5</div><span class="acc-ico">🤰</span><div class="acc-t">Protección frente a discriminación por embarazo</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Ninguna trabajadora puede ser <em>despedida, degradada ni afectada salarialmente</em> por embarazo, lactancia o ejercicio de derechos de maternidad. La norma exige mecanismos formales de protección comunicados a toda la organización. <span class="tag">Garantía obligatoria</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S4 EJE 2 ══ -->
+<div class="slide" id="s4">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Eje 2 · Igualdad de Oportunidades</div>
+      <div class="hsub a1">Capacitación, liderazgo y paridad en todos los niveles</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="eje-wrap">
+      <div class="eje-left a2">
+        <div class="eje-num">02</div>
+        <div class="eje-kicker">Segundo eje</div>
+        <div class="eje-name">Igualdad de Oportunidades</div>
+        <div class="viz-label">Mujeres en puestos directivos</div>
+        <div class="viz-counter" id="cnt4">0%</div>
+        <div class="viz-sub">en puestos de mando APF<br><span style="font-size:11px;opacity:.5">(IMCO, 2023)</span></div>
+        <div class="viz-bars">
+          <div class="vb-row"><div class="vb-hdr"><span class="vb-name">Direcciones generales</span><span class="vb-val" id="vl4a">—</span></div><div class="vb-track"><div class="vb-fill vb-g" data-w="34" id="vb4a"></div></div></div>
+          <div class="vb-row"><div class="vb-hdr"><span class="vb-name">Subsecretarías</span><span class="vb-val" id="vl4b">—</span></div><div class="vb-track"><div class="vb-fill vb-g" data-w="30" id="vb4b"></div></div></div>
+          <div class="vb-row"><div class="vb-hdr"><span class="vb-name">Jefaturas de unidad</span><span class="vb-val" id="vl4c">—</span></div><div class="vb-track"><div class="vb-fill vb-g" data-w="28" id="vb4c"></div></div></div>
+        </div>
+        <div class="viz-note">La NMX exige metas de paridad (40–60%) en todos los niveles jerárquicos.</div>
+      </div>
+      <div class="eje-right a3">
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">1</div><span class="acc-ico">🎓</span><div class="acc-t">Acceso equitativo a capacitación y desarrollo</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Mismo acceso a <em>cursos, becas y certificaciones</em> para mujeres y hombres. Registro desagregado por sexo con distribución equitativa de horas de formación, presentado anualmente a la dirección. <span class="tag">Registro obligatorio</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">2</div><span class="acc-ico">🌟</span><div class="acc-t">Mentoría y desarrollo del liderazgo femenino</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Programas formales orientados a <em>promover el acceso de mujeres a puestos de dirección</em>. Documentados con metas anuales medibles, responsables nombrados y reporte de resultados con evidencia de impacto. <span class="tag">Programa documentado</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">3</div><span class="acc-ico">🔍</span><div class="acc-t">Criterios de ascenso objetivos y públicos</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Convocatorias internas con <em>criterios predefinidos y verificables</em>, accesibles a toda la plantilla. Los paneles de selección se capacitan en perspectiva de género para evitar sesgos implícitos. <span class="tag">Transparencia requerida</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">4</div><span class="acc-ico">🪟</span><div class="acc-t">Identificación y eliminación del "techo de cristal"</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Análisis anual de paridad por nivel jerárquico para identificar <em>barreras estructurales o informales</em>: redes de poder exclusivas, disponibilidad horaria como criterio implícito, sesgos en entrevistas. Las brechas obligan a medidas correctivas documentadas. <span class="tag">Análisis anual</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">5</div><span class="acc-ico">🎯</span><div class="acc-t">Metas de representación equilibrada con fecha</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">La NMX exige metas internas con <em>horizonte temporal y responsables</em> para alcanzar representación equilibrada (40–60% de cualquier género) en todos los niveles. Se revisan anualmente y se presentan como evidencia en la auditoría. <span class="tag">Metas con fecha</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S5 EJE 3 ══ -->
+<div class="slide" id="s5">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Eje 3 · Corresponsabilidad y Conciliación</div>
+      <div class="hsub a1">Permisos, flexibilidad, cuidados y diversidad</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="eje-wrap">
+      <div class="eje-left a2">
+        <div class="eje-num">03</div>
+        <div class="eje-kicker">Tercer eje</div>
+        <div class="eje-name">Corresponsabilidad y Conciliación</div>
+        <div class="viz-label">Cuidado no remunerado</div>
+        <div class="viz-counter" id="cnt5">0×</div>
+        <div class="viz-sub">más horas de trabajo no remunerado<br>dedican las mujeres frente a los hombres<br><span style="font-size:11px;opacity:.5">(INEGI, 2019)</span></div>
+        <div class="viz-bars">
+          <div class="vb-row"><div class="vb-hdr"><span class="vb-name">Mujeres (hrs/día no remunerado)</span><span class="vb-val" id="vl5a">—</span></div><div class="vb-track"><div class="vb-fill vb-g" data-w="100" id="vb5a"></div></div></div>
+          <div class="vb-row"><div class="vb-hdr"><span class="vb-name">Hombres (hrs/día no remunerado)</span><span class="vb-val" id="vl5b">—</span></div><div class="vb-track"><div class="vb-fill vb-w" data-w="39" id="vb5b"></div></div></div>
+        </div>
+        <div class="viz-note">La corresponsabilidad organizacional ayuda a distribuir más equitativamente esta carga.</div>
+      </div>
+      <div class="eje-right a3">
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">1</div><span class="acc-ico">👶</span><div class="acc-t">Permisos de maternidad y paternidad sin penalización</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Los permisos de maternidad, paternidad y adopción se ejercen <em>sin consecuencias negativas</em> en evaluación, salario ni posibilidades de ascenso. Procedimiento formal de reincorporación con seguimiento documentado a los 30, 60 y 90 días. <span class="tag">Procedimiento formal</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">2</div><span class="acc-ico">🕐</span><div class="acc-t">Flexibilidad laboral formalizada</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">La NMX promueve <em>horarios flexibles, trabajo a distancia y jornadas reducidas</em> como instrumentos de conciliación para toda la plantilla, formalizados en políticas internas accesibles tanto a mujeres como a hombres. <span class="tag">Política interna</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">3</div><span class="acc-ico">♿</span><div class="acc-t">Accesibilidad para personas con discapacidad</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Instalaciones, sistemas de comunicación y procesos internos <em>accesibles</em>, con atención a la doble vulnerabilidad de mujeres con discapacidad. <em>Ajustes razonables documentados</em> y evaluados periódicamente. <span class="tag">Ajustes razonables</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">4</div><span class="acc-ico">🏳️‍🌈</span><div class="acc-t">No discriminación por orientación sexual e identidad</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Políticas que protejan a personas de la diversidad sexual: <em>lenguaje inclusivo en documentos oficiales, protocolos anti-discriminación</em> por orientación sexual o identidad de género, acceso a los mismos beneficios laborales sin distinción. <span class="tag">Política inclusiva</span></div></div></div>
+        <div class="acc" onclick="tog(this)"><div class="acc-head"><div class="acc-n">5</div><span class="acc-ico">🍼</span><div class="acc-t">Apoyo a la lactancia y servicios de cuidado</div><span class="acc-arr">▶</span></div><div class="acc-body"><div class="acc-bi">Donde sea viable: <em>espacios de lactancia dignos, esquemas de guardería o apoyo económico equivalente</em> y permisos para emergencias familiares. Medidas que redistribuyen la carga de cuidado desproporcionada en las mujeres. <span class="tag">Medida valorada</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S6 CERTIFICACIÓN ══ -->
+<div class="slide" id="s6">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">El Proceso de Certificación</div>
+      <div class="hsub a1">Usa las flechas ← → o haz clic en cada paso</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="cert-wrap a2">
+      <button class="cert-nav-btn" id="cert-prev" onclick="stepNav(-1)" disabled>
+        <span class="arr">←</span> Anterior
+      </button>
+      <div class="stepper" id="stepper" style="flex:1">
+        <div class="step act" onclick="setStep(0)"><div class="step-conn"><div class="step-fill" id="sf0"></div></div><div class="step-circ">1</div><div class="step-lbl">Autodiagnóstico</div></div>
+        <div class="step" onclick="setStep(1)"><div class="step-conn"><div class="step-fill" id="sf1"></div></div><div class="step-circ">2</div><div class="step-lbl">Plan de acción</div></div>
+        <div class="step" onclick="setStep(2)"><div class="step-conn"><div class="step-fill" id="sf2"></div></div><div class="step-circ">3</div><div class="step-lbl">Implementación (12 m.)</div></div>
+        <div class="step" onclick="setStep(3)"><div class="step-conn"><div class="step-fill" id="sf3"></div></div><div class="step-circ">4</div><div class="step-lbl">Auditoría ECV</div></div>
+        <div class="step" onclick="setStep(4)"><div class="step-conn"></div><div class="step-circ">5</div><div class="step-lbl">Distintivo NMX</div></div>
+      </div>
+      <button class="cert-nav-btn" id="cert-next" onclick="stepNav(1)">
+        Siguiente <span class="arr">→</span>
+      </button>
+    </div>
+    <div class="cert-panel a3">
+      <div class="cert-detail" id="cert-detail"></div>
+      <div class="cert-side" id="cert-side"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ S7 BIBLIOGRAFÍA ══ -->
+<div class="slide" id="s7">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Referencias bibliográficas</div>
+      <div class="hsub a1">Fuentes citadas en esta presentación</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="bib-section a1">Norma y marco legal</div>
+    <p class="bib-entry a2">Secretaría de Economía. (2015, 23 de noviembre). <em>Norma Mexicana NMX-R-025-SCFI-2015 en igualdad laboral y no discriminación</em>. Diario Oficial de la Federación. <a href="https://www.dof.gob.mx/nota_detalle.php?codigo=5394098&fecha=23/11/2015" target="_blank">https://www.dof.gob.mx/nota_detalle.php?codigo=5394098&amp;fecha=23/11/2015</a></p>
+
+    <div class="bib-section a2">Datos estadísticos</div>
+    <p class="bib-entry a3">INEGI. (2022a). <em>Encuesta Nacional de Ocupación y Empleo (ENOE). Indicadores de ocupación y empleo</em>. Instituto Nacional de Estadística y Geografía. <a href="https://www.inegi.org.mx/programas/enoe/15ymas/" target="_blank">https://www.inegi.org.mx/programas/enoe/15ymas/</a></p>
+    <p class="bib-entry a3">INEGI. (2019). <em>Encuesta Nacional sobre Uso del Tiempo (ENUT) 2019</em>. Instituto Nacional de Estadística y Geografía. <a href="https://www.inegi.org.mx/programas/enut/2019/" target="_blank">https://www.inegi.org.mx/programas/enut/2019/</a></p>
+    <p class="bib-entry a4">IMCO. (2023). <em>Mujeres en las secretarías de estado 2023</em>. Instituto Mexicano para la Competitividad. <a href="https://imco.org.mx/mujeres-en-las-secretarias-de-estado-2023/" target="_blank">https://imco.org.mx/mujeres-en-las-secretarias-de-estado-2023/</a></p>
+    <p class="bib-entry a4">IMCO. (2022). <em>Brecha salarial de género</em>. Instituto Mexicano para la Competitividad. <a href="https://imco.org.mx/brecha-salarial-de-genero/" target="_blank">https://imco.org.mx/brecha-salarial-de-genero/</a></p>
+
+    <div class="bib-section a4">Organismos promotores de la NMX</div>
+    <p class="bib-entry a5">CONAPRED. (s.f.). <em>Norma Mexicana NMX-R-025-SCFI-2015</em>. Consejo Nacional para Prevenir la Discriminación. <a href="https://www.conapred.org.mx/" target="_blank">https://www.conapred.org.mx/</a></p>
+    <p class="bib-entry a5">INMUJERES. (s.f.). <em>Norma Mexicana NMX-R-025-SCFI-2015 en igualdad laboral y no discriminación</em>. Instituto Nacional de las Mujeres. <a href="https://www.gob.mx/inmujeres" target="_blank">https://www.gob.mx/inmujeres</a></p>
+    <p class="bib-entry a5">STPS. (s.f.). <em>Norma Mexicana NMX-R-025-SCFI-2015 en igualdad laboral y no discriminación</em>. Secretaría del Trabajo y Previsión Social. <a href="https://www.gob.mx/stps/acciones-y-programas/norma-mexicana-nmx-r-025-scfi-2015-en-igualdad-laboral-y-no-discriminacion" target="_blank">https://www.gob.mx/stps/acciones-y-programas/norma-mexicana-nmx-r-025-scfi-2015-en-igualdad-laboral-y-no-discriminacion</a></p>
+  </div>
+</div>
+
+<!-- ══ S8 CIERRE ══ -->
+<div class="slide" id="s8">
+  <header class="hd">
+    <div class="hd-text">
+      <div class="ht a1">Situación Didáctica 3 · Cierre</div>
+      <div class="hsub a1">Lo que aprendiste hoy</div>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="hlogo a1">
+  </header>
+  <div class="sb">
+    <div class="c-decor a1"><div class="c-dot"></div><div class="c-line"></div><div class="c-dot"></div><div class="c-line"></div><div class="c-dot"></div></div>
+    <h2 class="c-main a2">La norma es el piso,<br>no el techo.</h2>
+    <p class="c-sub a3">La NMX-R-025-SCFI-2015 establece el mínimo exigible de igualdad laboral. En la <strong>Situación Didáctica 4</strong> pondremos en práctica estos criterios en procesos concretos de tu institución.</p>
+    <div class="tks" id="tks">
+      <div class="tk"><div class="tk-num">3</div><div class="tk-text">Ejes complementarios — igualdad, oportunidades y corresponsabilidad — que actúan de forma conjunta</div></div>
+      <div class="tk"><div class="tk-num">5</div><div class="tk-text">Pasos necesarios para obtener el Distintivo NMX-R-025, desde el autodiagnóstico hasta la auditoría ECV</div></div>
+      <div class="tk"><div class="tk-num">+16</div><div class="tk-text">Prácticas concretas y verificables que cualquier organización puede implementar para reducir la brecha</div></div>
+    </div>
+    <div class="c-orgs a4">
+      <span class="c-org">CEVIS</span>
+      <span class="c-org">Gobierno del Estado de Puebla</span>
+      <span class="c-org">Secretaría de las Mujeres</span>
+    </div>
+    <img src="assets/logo.png" alt="CEVIS" class="c-logo a5">
+    <div class="c-gold-line a5"></div>
+  </div>
+</div>
+
+<div id="nav">
+  <button class="nb" onclick="go(cur-1)">◀</button>
+  <div class="pd" id="dots"></div>
+  <span id="sc">1/7</span>
+  <button class="nb" onclick="go(cur+1)">▶</button>
+</div>
+</div><!-- /pres -->
+</div><!-- /wrapper -->
+
+<script>
+// ── SCALE ──
+function scalePresentation() {
+  const s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+  const pres = document.getElementById('pres');
+  pres.style.transform = 'scale(' + s + ')';
+}
+window.addEventListener('resize', scalePresentation);
+scalePresentation();
+
+// ── STATE ──
+const N = 8;
+let cur = 0;
+const pb = document.getElementById('pb');
+
+// dots
+const dotsEl = document.getElementById('dots');
+for (let i = 0; i < N; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' act' : '');
+  d.onclick = () => go(i);
+  dotsEl.appendChild(d);
+}
+
+function updPB() { pb.style.width = ((cur + 1) / N * 100) + '%'; }
+
+function go(idx) {
+  if (idx < 0 || idx >= N) return;
+  const slides = document.querySelectorAll('.slide');
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('exit-left');
+  const prev = cur;
+  setTimeout(() => slides[prev].classList.remove('exit-left'), 500);
+  cur = idx;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('act', i === cur));
+  document.getElementById('sc').textContent = (cur + 1) + '/' + N;
+  updPB();
+  onEnter(cur);
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(cur - 1); }
+});
+
+// ── ACCORDION ──
+function tog(el) {
+  const was = el.classList.contains('open');
+  el.closest('.eje-right').querySelectorAll('.acc').forEach(a => a.classList.remove('open'));
+  if (!was) el.classList.add('open');
+}
+
+// ── COUNTER ──
+function countUp(el, target, suffix, dec, dur) {
+  if (!el) return;
+  dec = dec || 0; dur = dur || 1400;
+  const t0 = performance.now();
+  const run = now => {
+    const p = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = (target * ease).toFixed(dec) + suffix;
+    if (p < 1) requestAnimationFrame(run);
+  };
+  requestAnimationFrame(run);
+}
+
+// ── BARS ──
+function animBar(fillId, labelId, suffix, displayMax) {
+  const fill = document.getElementById(fillId);
+  if (!fill) return;
+  fill.style.transition = 'none';
+  fill.style.width = '0';
+  const tw = fill.dataset.w;
+  requestAnimationFrame(() => setTimeout(() => {
+    fill.style.transition = 'width 1.2s cubic-bezier(.4,0,.2,1)';
+    fill.style.width = tw + '%';
+  }, 60));
+  if (labelId && displayMax !== undefined) {
+    const lbl = document.getElementById(labelId);
+    if (!lbl) return;
+    const dur = 1200, t0 = performance.now();
+    const run = now => {
+      const p = Math.min((now - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      const val = displayMax * ease;
+      lbl.textContent = suffix === 'h' ? val.toFixed(1) + 'h' : Math.round(val) + '%';
+      if (p < 1) requestAnimationFrame(run);
+    };
+    requestAnimationFrame(run);
+  }
+}
+
+// ── SLIDE ENTER HOOKS ──
+function onEnter(idx) {
+  if (idx === 2) setTimeout(() => {
+    countUp(document.getElementById('cnt3'), 14, '%', 0);
+    animBar('vb3a', 'vl3a', '%', 86);
+    animBar('vb3b', null);
+  }, 280);
+  if (idx === 3) setTimeout(() => {
+    countUp(document.getElementById('cnt4'), 33, '%', 0);
+    animBar('vb4a', 'vl4a', '%', 34);
+    animBar('vb4b', 'vl4b', '%', 30);
+    animBar('vb4c', 'vl4c', '%', 28);
+  }, 280);
+  if (idx === 4) setTimeout(() => {
+    countUp(document.getElementById('cnt5'), 2.6, '×', 1);
+    animBar('vb5a', 'vl5a', 'h', 5.7);
+    animBar('vb5b', 'vl5b', 'h', 2.2);
+  }, 280);
+  if (idx === 7) {
+    document.querySelectorAll('.tk').forEach(t => t.classList.remove('show'));
+    setTimeout(() => {
+      document.querySelectorAll('.tk').forEach((t, i) => setTimeout(() => t.classList.add('show'), i * 160));
+    }, 320);
+  }
+}
+
+// ── CERTIFICATION STEPPER ──
+const certData = [
+  { title: '1. Autodiagnóstico organizacional',
+    html: `<p>La organización aplica una herramienta de diagnóstico para identificar qué prácticas exigidas por la NMX ya están en marcha y cuáles requieren atención. Permite conocer el punto de partida y dimensionar el esfuerzo antes de invertir recursos.</p><ul><li>Revisión de políticas internas, reglamentos y contratos colectivos vigentes</li><li>Análisis de plantilla <strong>desagregada por sexo, nivel jerárquico y remuneración</strong></li><li>Identificación de brechas salariales mediante auditoría interna inicial</li><li>Evaluación de existencia y efectividad del protocolo contra acoso</li></ul>`,
+    benefits:[{t:'Mapa de brechas',b:'Identificas exactamente dónde están los incumplimientos antes de invertir recursos.'},{t:'Línea base medible',b:'Punto de partida verificable para demostrar avance en la auditoría externa.'}]},
+  { title: '2. Plan de acción con metas y responsables',
+    html: `<p>Plan estructurado para cerrar las brechas detectadas, con responsables nombrados, presupuesto asignado y fechas de cumplimiento para cada práctica.</p><ul><li>Priorización de prácticas críticas: <strong>protocolo anti-acoso y auditoría salarial</strong></li><li>Designación de <strong>responsable o comité de igualdad</strong> con autoridad formal</li><li>Capacitación a personal directivo y RRHH en perspectiva de género</li><li>Indicadores cuantitativos de seguimiento con revisión trimestral</li></ul>`,
+    benefits:[{t:'Responsabilidad clara',b:'Cada práctica tiene responsable y fecha: sin ambigüedad ni dilación posible.'},{t:'Presupuesto justificado',b:'Permite asignar recursos a las brechas con mayor impacto medible.'}]},
+  { title: '3. Implementación documentada: mínimo 12 meses',
+    html: `<p>La NMX exige que las prácticas hayan sido <strong>implementadas y documentadas durante al menos 12 meses</strong> antes de solicitar la certificación. Garantiza que los cambios son reales y sostenidos, no formalidades para la auditoría.</p><ul><li>Registros mensuales de capacitaciones <strong>desagregados por sexo</strong></li><li>Evidencias del protocolo: casos recibidos, resueltos y tiempos de respuesta</li><li>Reportes trimestrales del plan de acción con indicadores actualizados</li><li>Actas del comité de igualdad con acuerdos y seguimiento documentado</li></ul>`,
+    benefits:[{t:'Cultura, no formalidad',b:'12 meses aseguran que los cambios son reales, no papel creado para la auditoría.'},{t:'Expediente sólido',b:'La documentación continua facilita enormemente la revisión de la ECV.'}]},
+  { title: '4. Auditoría externa por Entidad de Certificación (ECV)',
+    html: `<p>La organización contrata una ECV acreditada por la EMA para la <strong>auditoría externa</strong>. Verifica documentación, entrevista a personal en todos los niveles y valida in situ el cumplimiento.</p><ul><li>Revisión documental exhaustiva: políticas, registros de capacitación, resultados</li><li>Entrevistas confidenciales a personas trabajadoras en distintos niveles</li><li>Inspección de instalaciones: accesibilidad, espacios de lactancia, señalética</li><li>Dictamen de <strong>conformidad o no conformidad</strong> con plazo para subsanar</li></ul>`,
+    benefits:[{t:'Credibilidad externa',b:'La ECV acreditada por la EMA garantiza que el Distintivo es real y verificable.'},{t:'Hoja de ruta',b:'Las no conformidades son un plan de mejora concreto, no solo un obstáculo.'}]},
+  { title: '5. Distintivo NMX-R-025 · Vigencia 3 años',
+    html: `<p>Al superar la auditoría, la organización recibe el <strong>Distintivo NMX-R-025-SCFI-2015</strong>, reconocimiento oficial de igualdad laboral, válido por <strong>3 años</strong> con auditorías anuales de vigilancia.</p><ul><li>Uso oficial del Distintivo en comunicaciones y licitaciones institucionales</li><li>Auditoría de vigilancia cada <strong>12 meses</strong> para mantener la certificación activa</li><li>Re-certificación completa al tercer año con nuevo ciclo de evidencias</li><li>Registro público en la plataforma STPS como organización certificada</li></ul>`,
+    benefits:[{t:'🏅 Reconocimiento oficial',b:'Respaldado por STPS, INMUJERES y CONAPRED — vigente 3 años.'},{t:'Ventaja competitiva',b:'Posicionamiento favorable en licitaciones y atracción de talento diverso.'}]}
+];
+
+let certStep = 0;
+
+function stepNav(dir) {
+  const next = certStep + dir;
+  if (next >= 0 && next < certData.length) setStep(next);
+}
+
+function setStep(idx) {
+  certStep = idx;
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.remove('act', 'done');
+    if (i < idx) s.classList.add('done');
+    if (i === idx) s.classList.add('act');
+    const sf = document.getElementById('sf' + i);
+    if (sf) sf.style.width = i < idx ? '100%' : '0%';
+  });
+  const d = certData[idx];
+  document.getElementById('cert-detail').innerHTML = '<h4>' + d.title + '</h4>' + d.html;
+  document.getElementById('cert-side').innerHTML = d.benefits.map(b =>
+    '<div class="benefit show"><div class="ben-title">' + b.t + '</div><div class="ben-body">' + b.b + '</div></div>'
+  ).join('');
+  const prev = document.getElementById('cert-prev');
+  const next = document.getElementById('cert-next');
+  if (prev) prev.disabled = idx === 0;
+  if (next) next.disabled = idx === certData.length - 1;
+}
+
+// ── INIT ──
+updPB();
+setStep(0);
+</script>
+</body>
+</html>
