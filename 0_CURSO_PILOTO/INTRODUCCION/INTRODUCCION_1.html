@@ -162,5 +162,17 @@
     </div>
   </div>
 </div></div>
+
+<script>
+setTimeout(function(){
+  document.querySelectorAll('.header,.header-title,.header-logo,.content-box,.content-box p,.slide').forEach(function(el){
+    el.style.setProperty('opacity','1','important');
+    el.style.setProperty('clip-path','none','important');
+    el.style.setProperty('-webkit-clip-path','none','important');
+    el.style.setProperty('transform','none','important');
+    el.style.setProperty('visibility','visible','important');
+  });
+}, 800);
+</script>
 </body>
 </html>
